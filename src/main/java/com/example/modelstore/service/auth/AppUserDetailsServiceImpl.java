@@ -26,7 +26,7 @@ public class AppUserDetailsServiceImpl implements UserDetailsService {
             appUserId = UUID.fromString(id);
         }
         catch (IllegalArgumentException exception){
-            throw new UsernameNotFoundException("User with id: "+id+"not found");
+            throw new UsernameNotFoundException("User with id: "+id+" not found");
         }
         Optional<AppUser> appUserMatch = appUserRepository.findById(appUserId);
         if (appUserMatch.isEmpty()){

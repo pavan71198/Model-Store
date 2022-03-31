@@ -5,7 +5,6 @@ import com.amazonaws.services.s3.model.S3Object;
 import com.example.modelstore.dto.ModelMetaDataDto;
 import com.example.modelstore.entity.AppUser;
 import com.example.modelstore.entity.ModelMetaData;
-import com.example.modelstore.repository.AppUserRepository;
 import com.example.modelstore.repository.ModelMetaDataRepository;
 import com.example.modelstore.service.s3.AmazonS3Service;
 import com.example.modelstore.util.ModelMetaDataDtoMapper;

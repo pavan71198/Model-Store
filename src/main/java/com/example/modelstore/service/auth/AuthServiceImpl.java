@@ -14,8 +14,13 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Optional;
+
 @Service
 public class AuthServiceImpl implements AuthService {
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
     @Autowired
     private AppUserRepository appUserRepository;
 
@@ -25,8 +30,6 @@ public class AuthServiceImpl implements AuthService {
     @Autowired
     private JWTUtil jwtUtil;
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
 
     public String register(RegisterCredentialsDto registerCredentialsDto) throws ResponseStatusException {
         if (registerCredentialsDto.getUsername() == null || registerCredentialsDto.getPassword() == null || registerCredentialsDto.getName() == null){
@@ -38,14 +41,22 @@ public class AuthServiceImpl implements AuthService {
         AppUser newAppUser = credentialsDtoMapper.toAppUser(registerCredentialsDto);
         appUserRepository.save(newAppUser);
         newAppUser = appUserRepository.save(newAppUser);
-        return jwtUtil.generateToken(newAppUser.getUsername());
+        return jwtUtil.generateToken(newAppUser.getId().toString());
     }
 
     public String login(LoginCredentialsDto loginCredentialsDto) throws ResponseStatusException {
+        if (loginCredentialsDto.getUsername() == null || loginCredentialsDto.getPassword() == null){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Login credentials incomplete" );
+        }
+        Optional<AppUser> appUserMatch = appUserRepository.findByUsername(loginCredentialsDto.getUsername());
+        if (appUserMatch.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.EXPECTATION_FAILED, "User with username: "+loginCredentialsDto.getUsername()+" not present.");
+        }
+        AppUser appUser = appUserMatch.get();
         try {
-            UsernamePasswordAuthenticationToken authInputToken = new UsernamePasswordAuthenticationToken(loginCredentialsDto.getUsername(), loginCredentialsDto.getPassword());
+            UsernamePasswordAuthenticationToken authInputToken = new UsernamePasswordAuthenticationToken(appUser.getId().toString(), loginCredentialsDto.getPassword());
             authenticationManager.authenticate(authInputToken);
-            return jwtUtil.generateToken(loginCredentialsDto.getUsername());
+            return jwtUtil.generateToken(appUser.getId().toString());
         } catch (AuthenticationException exception){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Incorrect login credentials");
         }

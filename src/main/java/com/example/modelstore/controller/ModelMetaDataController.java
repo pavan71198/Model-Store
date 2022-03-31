@@ -8,7 +8,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -18,15 +17,13 @@ public class ModelMetaDataController {
     ModelMetaDataService modelMetaDataService;
 
     @PostMapping("/upload")
-    public String upload(@RequestParam("modelFile") MultipartFile uploadFile, @RequestParam("name") String fileName, Authentication authentication) {
+    public void upload(@RequestParam("modelFile") MultipartFile uploadFile, @RequestParam("name") String fileName, Authentication authentication) {
         modelMetaDataService.upload(uploadFile, fileName, authentication);
-        return "Uploaded";
     }
 
     @PostMapping("/update/{id}")
-    public String update(@PathVariable String id, @RequestParam("modelFile") MultipartFile uploadFile, @RequestParam("name") String fileName, Authentication authentication) {
+    public void update(@PathVariable String id, @RequestParam("modelFile") MultipartFile uploadFile, @RequestParam("name") String fileName, Authentication authentication) {
         modelMetaDataService.update(id, uploadFile, fileName, authentication);
-        return "Uploaded";
     }
 
     @GetMapping("/download/{id}")

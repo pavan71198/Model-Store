@@ -15,7 +15,7 @@ public class ModelMetaDataDtoMapper {
         modelMetaDataDto.setFileName(modelMetaData.getFileName());
         modelMetaDataDto.setUserId(modelMetaData.getAppUser().getId().toString());
         modelMetaDataDto.setUploaded(modelMetaData.getUploaded().getTime());
-        modelMetaDataDto.setUploaded(modelMetaData.getUpdated().getTime());
+        modelMetaDataDto.setUpdated(modelMetaData.getUpdated().getTime());
         return modelMetaDataDto;
     }
 

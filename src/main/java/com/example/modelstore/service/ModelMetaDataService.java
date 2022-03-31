@@ -1,7 +1,6 @@
 package com.example.modelstore.service;
 
 import com.example.modelstore.dto.ModelMetaDataDto;
-import com.example.modelstore.entity.ModelMetaData;
 import org.springframework.http.HttpEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.multipart.MultipartFile;
