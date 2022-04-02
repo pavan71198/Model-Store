@@ -1,7 +1,7 @@
 # Model-Store
 REST API developed with SpringBoot for storing 3D Model Files on Amazon S3
 
-##Features of the REST API `/api`
+## Features of the REST API `/api`
 - Creating a User `/auth/register`
 - Login as a User to obtain JWT Token for authentication of remaining APIs `/auth/login`
 - Getting User info `/user/info`
@@ -11,7 +11,7 @@ REST API developed with SpringBoot for storing 3D Model Files on Amazon S3
 - JWT token authentication for all the APIs
 other that `/auth/*`
 
-##Notes for running the Server on localhost
+## Notes for running the Server on localhost
 - Create a file named 'application-dev.properties' according to the template 'application.properties.template'
 - Fill in the PostgreSQL and Amazon S3 configurations
 - Add 'dev' profile while running the application
