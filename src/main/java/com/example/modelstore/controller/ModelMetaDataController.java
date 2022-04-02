@@ -32,6 +32,11 @@ public class ModelMetaDataController {
         return modelMetaDataService.download(id, authentication);
     }
 
+    @DeleteMapping("/delete/{id}")
+    public void delete(@PathVariable String id, Authentication authentication){
+        modelMetaDataService.delete(id, authentication);
+    }
+
     @GetMapping("/info/{id}")
     public ModelMetaDataDto fetchById(@PathVariable String id, Authentication authentication){
         return modelMetaDataService.fetchById(id, authentication);

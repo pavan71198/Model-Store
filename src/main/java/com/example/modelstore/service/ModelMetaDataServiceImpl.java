@@ -138,6 +138,22 @@ public class ModelMetaDataServiceImpl implements ModelMetaDataService {
         }
     }
 
+    public void delete(String id, Authentication authentication){
+        AppUser appUser = appUserService.fetchById(authentication.getPrincipal().toString());
+        ModelMetaData modelMetaData = fetchById(id);
+        if (!modelMetaData.getAppUser().equals(appUser)){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "File doesn't belong to this user");
+        }
+        String path = bucketName+"/"+authentication.getPrincipal().toString();
+        try {
+            amazonS3Service.delete(path, id);
+            modelMetaDataRepository.delete(modelMetaData);
+        }
+        catch (Exception exception){
+            throw new ResponseStatusException(HttpStatus.EXPECTATION_FAILED, "Couldn't delete file");
+        }
+    }
+
     public ModelMetaDataDto fetchById(String id, Authentication authentication){
         AppUser appUser = appUserService.fetchById(authentication.getPrincipal().toString());
         ModelMetaData modelMetaData = fetchById(id);

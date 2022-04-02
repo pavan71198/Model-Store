@@ -1,6 +1,7 @@
 package com.example.modelstore.service.s3;
 
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.DeleteObjectsResult;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectResult;
 import com.amazonaws.services.s3.model.S3Object;
@@ -26,5 +27,9 @@ public class AmazonS3ServiceImpl implements AmazonS3Service{
 
     public S3Object download(String path, String name) {
         return amazonS3.getObject(path, name);
+    }
+
+    public void delete(String path, String name){
+        amazonS3.deleteObject(path, name);
     }
 }
